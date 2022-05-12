@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import logo from '../../img/logo.svg'
 import { LoteryContest, LoteryType } from '../../pages/App/App';
 import { HeaderWrapper } from './styled';

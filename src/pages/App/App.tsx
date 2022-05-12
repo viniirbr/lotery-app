@@ -20,9 +20,6 @@ function App() {
   const [loteryContest, setLoteryContest] = useState<LoteryContest>();
   const [numbersDrawn, setNumbersDrawn] = useState<number[]>([]);
 
-  console.log(selectedOption);
-  console.log(loteryContest)
-  console.log(numbersDrawn)
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -32,18 +29,26 @@ function App() {
     }
     fetchOptions();
   }, []);
+  
 
   useEffect(() => {
     const fetchContest = async () => {
       const contestsResponse = await api.get('/loterias-concursos');
       const contests = contestsResponse.data as LoteryContest[];
       setLoteryContest(contests.filter((contest) => contest.loteriaId === selectedOption?.id)[0]);
+    }
+    fetchContest();
+  }, [selectedOption]);
+
+  useEffect(() => {
+    const fetchContestNumbers = async () => {
       const contestsByIdResponse = await api.get(`/concursos/${loteryContest?.concursoId}`);
       const contestBtId = contestsByIdResponse.data.numeros
       setNumbersDrawn(contestBtId);
     }
-    fetchContest();
-  }, [selectedOption]);
+    fetchContestNumbers()
+
+  }, [loteryContest])
 
 
   function selectOption(value: string) {
@@ -60,7 +65,7 @@ function App() {
         selectedOption={selectedOption as LoteryType}
         loteryContest={loteryContest as LoteryContest}
         onChangeOption={selectOption} />
-      <BallSet numberValues={numbersDrawn as number[]}/>
+      <BallSet numberValues={numbersDrawn as number[]} />
 
     </div>
   );
