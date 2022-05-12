@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../api/loteriasApi';
+import { BallSet } from '../../components/BallSet';
 import { GlobalStyle } from '../../components/GlobalStyle';
 import { Header } from '../../components/Header';
 
@@ -16,16 +17,29 @@ export interface LoteryContest {
 function App() {
   const [selectedOption, setSelectedOption] = useState<LoteryType>();
   const [listOfOptions, setListOfOptions] = useState<LoteryType[]>([]);
-  const [loteryEvent, setLoteryEvent] = useState<LoteryContest>();
+  const [loteryContest, setLoteryContest] = useState<LoteryContest>();
+  const [numbersDrawn, setNumbersDrawn] = useState<number[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const loteries = await api.get('/loterias');
-      setListOfOptions(loteries.data);
+    const fetchOptions = async () => {
+      const loteriesResponse = await api.get('/loterias');
+      setListOfOptions(loteriesResponse.data);
       setSelectedOption(listOfOptions[0]);
     }
-    fetchData();
+    fetchOptions();
   }, []);
+
+  useEffect(() => {
+    const fetchContest = async () => {
+      const contestsResponse = await api.get('/loterias-concursos');
+      const contests = contestsResponse.data as LoteryContest[];
+      setLoteryContest(contests.filter((contest) => contest.loteriaId === selectedOption?.id)[0]);
+      const contestsByIdResponse = await api.get(`/concursos/${loteryContest?.concursoId}`);
+      const contestBtId = contestsByIdResponse.data.numeros
+      setNumbersDrawn(contestBtId);
+    }
+    fetchContest();
+  }, [selectedOption]);
 
 
   function selectOption(value: string) {
@@ -37,8 +51,12 @@ function App() {
   return (
     <div className="App">
       <GlobalStyle />
-      <Header loteryOptions={listOfOptions} selectedOption={selectedOption as LoteryType} onChangeOption={selectOption} />
-
+      <Header
+        loteryOptions={listOfOptions}
+        selectedOption={selectedOption as LoteryType}
+        loteryContest={loteryContest as LoteryContest}
+        onChangeOption={selectOption} />
+      <BallSet numberValues={numbersDrawn as number[]}/>
 
     </div>
   );

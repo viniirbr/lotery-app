@@ -8,5 +8,11 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         text-decoration: none;
         font-family: 'Montserrat', sans-serif;
+        outline: none;
+        border: none;
+    }
+
+    h1, h2, h3, h4 {
+        color: white;
     }
 `

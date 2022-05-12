@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { api } from '../../api/loteriasApi';
 import logo from '../../img/logo.svg'
-import { LoteryType } from '../../pages/App/App';
+import { LoteryContest, LoteryType } from '../../pages/App/App';
+import { HeaderWrapper } from './styled';
 
 interface HeaderProps {
     loteryOptions: LoteryType[],
     selectedOption: LoteryType,
+    loteryContest: LoteryContest
     onChangeOption: (value: string) => void
 }
 
-export function Header({ loteryOptions, selectedOption, onChangeOption }: HeaderProps) {
+export function Header({ loteryOptions, selectedOption, loteryContest, onChangeOption }: HeaderProps) {
 
     return (
-        <header style={{ background: 'red' }}>
+        <HeaderWrapper>
             <select value={selectedOption?.nome} onChange={(e) => onChangeOption(e.target.value)}>
                 {loteryOptions.map((option) => <option key={option.id}>{option.nome.toUpperCase()}</option>)}
             </select>
             <div>
                 <img src={logo} alt='' />
-                <h1>{selectedOption?.nome}</h1>
+                <h1>{selectedOption?.nome.toUpperCase()}</h1>
             </div>
-
-        </header>
+            <h3>{loteryContest !== undefined && `Concurso Nº ${loteryContest.concursoId}`}</h3>
+        </HeaderWrapper>
     )
 }
