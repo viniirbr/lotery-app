@@ -11,11 +11,15 @@ interface HeaderProps {
 }
 
 export function Header({ loteryOptions, selectedOption, loteryContest, onChangeOption }: HeaderProps) {
-
     return (
         <HeaderWrapper>
             <select value={selectedOption?.nome} onChange={(e) => onChangeOption(e.target.value)}>
-                {loteryOptions.map((option) => <option key={option.id}>{option.nome.toUpperCase()}</option>)}
+                {loteryOptions.map((option) =>
+                    <option
+                        key={option.id}
+                        value={option.nome.toLocaleLowerCase()}>
+                        {option.nome.toUpperCase()}
+                    </option>)}
             </select>
             <div>
                 <img src={logo} alt='' />

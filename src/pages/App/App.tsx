@@ -20,6 +20,10 @@ function App() {
   const [loteryContest, setLoteryContest] = useState<LoteryContest>();
   const [numbersDrawn, setNumbersDrawn] = useState<number[]>([]);
 
+  console.log(selectedOption);
+  console.log(loteryContest)
+  console.log(numbersDrawn)
+
   useEffect(() => {
     const fetchOptions = async () => {
       const loteriesResponse = await api.get('/loterias');
