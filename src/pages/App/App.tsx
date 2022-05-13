@@ -14,6 +14,23 @@ export interface LoteryContest {
   concursoId: number
 }
 
+function selectColor(selectedOption: LoteryType) {
+  switch (selectedOption?.id) {
+    case 0:
+      return '#6BEFA3';
+    case 1:
+      return '#8666EF';
+    case 2:
+      return '#DD7AC6';
+    case 3:
+      return '#FFAB64';
+    case 4:
+      return '#5AAD7D';
+    case 5:
+      return '#BFAF83'
+  }
+}
+
 function App() {
   const [selectedOption, setSelectedOption] = useState<LoteryType>();
   const [listOfOptions, setListOfOptions] = useState<LoteryType[]>([]);
@@ -29,7 +46,7 @@ function App() {
     }
     fetchOptions();
   }, []);
-  
+
 
   useEffect(() => {
     const fetchContest = async () => {
@@ -64,8 +81,11 @@ function App() {
         loteryOptions={listOfOptions}
         selectedOption={selectedOption as LoteryType}
         loteryContest={loteryContest as LoteryContest}
-        onChangeOption={selectOption} />
-      <BallSet numberValues={numbersDrawn as number[]} />
+        onChangeOption={selectOption}
+        color={selectColor(selectedOption as LoteryType)} />
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <BallSet numberValues={numbersDrawn as number[]} />
+      </div>
 
     </div>
   );

@@ -5,7 +5,7 @@ export const HeaderWrapper = styled.header`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background: rgba(107, 239, 163, 1);
+    background: ${props => props.color || '#6BEFA3'};
     padding: 50px 0;
 
     select {

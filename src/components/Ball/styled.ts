@@ -7,5 +7,7 @@ export const BallWrapper = styled.span`
     font-family: Montserrat;
     font-weight: 700;
     color: rgba(51, 51, 51, 1);
+    font-size: 1.3rem;
     text-align: center;
+
 `

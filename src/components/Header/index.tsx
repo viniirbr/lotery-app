@@ -5,13 +5,14 @@ import { HeaderWrapper } from './styled';
 interface HeaderProps {
     loteryOptions: LoteryType[],
     selectedOption: LoteryType,
-    loteryContest: LoteryContest
-    onChangeOption: (value: string) => void
+    loteryContest: LoteryContest,
+    onChangeOption: (value: string) => void,
+    color?: string
 }
 
-export function Header({ loteryOptions, selectedOption, loteryContest, onChangeOption }: HeaderProps) {
+export function Header({ loteryOptions, selectedOption, loteryContest, onChangeOption, color }: HeaderProps) {
     return (
-        <HeaderWrapper>
+        <HeaderWrapper color={color}>
             <select value={selectedOption?.nome} onChange={(e) => onChangeOption(e.target.value)}>
                 {loteryOptions.map((option) =>
                     <option
