@@ -5,8 +5,9 @@ export const HeaderWrapper = styled.header`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background: ${props => props.color || '#6BEFA3'};
+    background: ${(props) => props.color};
     padding: 50px 0;
+    width: 100%;
 
     select {
         border-radius: 10px;

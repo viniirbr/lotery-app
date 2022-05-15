@@ -3,6 +3,7 @@ import { api } from '../../api/loteriasApi';
 import { BallSet } from '../../components/BallSet';
 import { GlobalStyle } from '../../components/GlobalStyle';
 import { Header } from '../../components/Header';
+import { AppWrapper } from './styled';
 
 export interface LoteryType {
   id: number | undefined,
@@ -12,23 +13,6 @@ export interface LoteryType {
 export interface LoteryContest {
   loteriaId: number,
   concursoId: number
-}
-
-function selectColor(selectedOption: LoteryType) {
-  switch (selectedOption?.id) {
-    case 0:
-      return '#6BEFA3';
-    case 1:
-      return '#8666EF';
-    case 2:
-      return '#DD7AC6';
-    case 3:
-      return '#FFAB64';
-    case 4:
-      return '#5AAD7D';
-    case 5:
-      return '#BFAF83'
-  }
 }
 
 function App() {
@@ -60,7 +44,7 @@ function App() {
   useEffect(() => {
     const fetchContestNumbers = async () => {
       const contestsByIdResponse = await api.get(`/concursos/${loteryContest?.concursoId}`);
-      const contestBtId = contestsByIdResponse.data.numeros
+      const contestBtId = contestsByIdResponse.data.numeros;
       setNumbersDrawn(contestBtId);
     }
     fetchContestNumbers()
@@ -74,20 +58,38 @@ function App() {
     })[0]);
   }
 
-  return (
-    <div className="App">
-      <GlobalStyle />
-      <Header
-        loteryOptions={listOfOptions}
-        selectedOption={selectedOption as LoteryType}
-        loteryContest={loteryContest as LoteryContest}
-        onChangeOption={selectOption}
-        color={selectColor(selectedOption as LoteryType)} />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <BallSet numberValues={numbersDrawn as number[]} />
-      </div>
+  function selectColor(selectedOption: LoteryType) {
+  switch (selectedOption?.id) {
+    case 0:
+      return ('#6BEFA3')
+    case 1:
+      return '#8666EF';
+    case 2:
+      return '#DD7AC6';
+    case 3:
+      return '#FFAB64';
+    case 4:
+      return '#5AAD7D';
+    case 5:
+      return '#BFAF83'
+  }
+}
 
-    </div>
+  return (
+      <AppWrapper className="App">
+        <GlobalStyle />
+        <Header
+          loteryOptions={listOfOptions}
+          selectedOption={selectedOption as LoteryType}
+          loteryContest={loteryContest as LoteryContest}
+          onChangeOption={selectOption}
+          color={selectColor(selectedOption as LoteryType)} />
+
+        <main>
+          <BallSet numberValues={numbersDrawn as number[]} />
+          <p>Este sorteio é meramente ilustrativo e não possui nenhuma ligação com a CAIXA.</p>
+        </main>
+      </AppWrapper>
   );
 }
 

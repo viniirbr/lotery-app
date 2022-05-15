@@ -7,7 +7,7 @@ interface HeaderProps {
     selectedOption: LoteryType,
     loteryContest: LoteryContest,
     onChangeOption: (value: string) => void,
-    color?: string
+    color?: string,
 }
 
 export function Header({ loteryOptions, selectedOption, loteryContest, onChangeOption, color }: HeaderProps) {
@@ -26,6 +26,7 @@ export function Header({ loteryOptions, selectedOption, loteryContest, onChangeO
                 <h1>{selectedOption?.nome.toUpperCase()}</h1>
             </div>
             <h3>{loteryContest !== undefined && `Concurso Nº ${loteryContest.concursoId}`}</h3>
+
         </HeaderWrapper>
     )
 }

@@ -12,10 +12,6 @@ export const GlobalStyle = createGlobalStyle`
         border: none;
     }
 
-    body {
-        background: rgba(239, 239, 239, 1);
-    }
-
     h1, h2, h3, h4 {
         color: white;
     }

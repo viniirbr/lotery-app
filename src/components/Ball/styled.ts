@@ -9,5 +9,8 @@ export const BallWrapper = styled.span`
     color: rgba(51, 51, 51, 1);
     font-size: 1.3rem;
     text-align: center;
+    width: 75px;
+    height: 75px;
+    line-height: 40px;
 
 `
