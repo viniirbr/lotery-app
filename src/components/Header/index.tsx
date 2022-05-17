@@ -8,9 +8,10 @@ interface HeaderProps {
     loteryContest: LoteryContest,
     onChangeOption: (value: string) => void,
     color?: string,
+    date: string
 }
 
-export function Header({ loteryOptions, selectedOption, loteryContest, onChangeOption, color }: HeaderProps) {
+export function Header({ loteryOptions, selectedOption, loteryContest, onChangeOption, color, date }: HeaderProps) {
     return (
         <HeaderWrapper color={color}>
             <select value={selectedOption?.nome} onChange={(e) => onChangeOption(e.target.value)}>
@@ -25,7 +26,12 @@ export function Header({ loteryOptions, selectedOption, loteryContest, onChangeO
                 <img src={logo} alt='' />
                 <h1>{selectedOption?.nome.toUpperCase()}</h1>
             </div>
-            <h3>{loteryContest !== undefined && `Concurso Nº ${loteryContest.concursoId}`}</h3>
+
+            <div className='contest-info'>
+                <h3 className='contest-mobile'>{loteryContest !== undefined && `Concurso Nº ${loteryContest.concursoId}`}</h3>
+                <h3 className='contest'>Concurso</h3>
+                <h2 className='contest-date'>{loteryContest !== undefined && `${loteryContest.concursoId} - ${date}`}</h2>
+            </div>
 
         </HeaderWrapper>
     )

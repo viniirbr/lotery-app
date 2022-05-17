@@ -7,4 +7,8 @@ export const BallSetWrapper = styled.span`
     padding: 50px 20px 0 20px;
     column-gap: 15px;
     row-gap: 15px;
+
+    @media screen and (min-width: 900px){
+        grid-template-columns: repeat(6, 70px);
+    }
 `

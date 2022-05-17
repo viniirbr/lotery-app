@@ -20,6 +20,7 @@ function App() {
   const [listOfOptions, setListOfOptions] = useState<LoteryType[]>([]);
   const [loteryContest, setLoteryContest] = useState<LoteryContest>();
   const [numbersDrawn, setNumbersDrawn] = useState<number[]>([]);
+  const [date, setDate] = useState<string>();
 
 
   useEffect(() => {
@@ -44,8 +45,14 @@ function App() {
   useEffect(() => {
     const fetchContestNumbers = async () => {
       const contestsByIdResponse = await api.get(`/concursos/${loteryContest?.concursoId}`);
-      const contestBtId = contestsByIdResponse.data.numeros;
-      setNumbersDrawn(contestBtId);
+      const data = contestsByIdResponse.data;    
+      const contestById = data.numeros;
+      const contestDate = data.data;
+      const formatedDate = (new Date(contestDate).getDay().toString()+'/'+
+      new Date(contestDate).getMonth().toString()+'/'+
+      new Date(contestDate).getFullYear().toString())
+      setNumbersDrawn(contestById);
+      setDate(formatedDate);
     }
     fetchContestNumbers()
 
@@ -59,37 +66,43 @@ function App() {
   }
 
   function selectColor(selectedOption: LoteryType) {
-  switch (selectedOption?.id) {
-    case 0:
-      return ('#6BEFA3')
-    case 1:
-      return '#8666EF';
-    case 2:
-      return '#DD7AC6';
-    case 3:
-      return '#FFAB64';
-    case 4:
-      return '#5AAD7D';
-    case 5:
-      return '#BFAF83'
+    switch (selectedOption?.id) {
+      case 0:
+        return ('#6BEFA3')
+      case 1:
+        return '#8666EF';
+      case 2:
+        return '#DD7AC6';
+      case 3:
+        return '#FFAB64';
+      case 4:
+        return '#5AAD7D';
+      case 5:
+        return '#BFAF83'
+    }
   }
-}
 
   return (
-      <AppWrapper className="App">
-        <GlobalStyle />
-        <Header
-          loteryOptions={listOfOptions}
-          selectedOption={selectedOption as LoteryType}
-          loteryContest={loteryContest as LoteryContest}
-          onChangeOption={selectOption}
-          color={selectColor(selectedOption as LoteryType)} />
+    <AppWrapper className="App">
+      <GlobalStyle />
+      <Header
+        loteryOptions={listOfOptions}
+        selectedOption={selectedOption as LoteryType}
+        loteryContest={loteryContest as LoteryContest}
+        onChangeOption={selectOption}
+        color={selectColor(selectedOption as LoteryType)}
+        date= {date as string} />
 
+      <div className='bottom-container'>
         <main>
           <BallSet numberValues={numbersDrawn as number[]} />
-          <p>Este sorteio é meramente ilustrativo e não possui nenhuma ligação com a CAIXA.</p>
         </main>
-      </AppWrapper>
+
+        <footer>
+          <p>Este sorteio é meramente ilustrativo e não possui nenhuma ligação com a CAIXA.</p>
+        </footer>
+      </div>
+    </AppWrapper>
   );
 }
 
